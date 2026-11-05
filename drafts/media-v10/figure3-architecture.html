@@ -1,0 +1,77 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>CSM Architecture</title>
+<style>
+  body { margin:0; background:#fff; font-family: "Helvetica Neue", Arial, sans-serif; color:#1d2433; }
+  .page { width:1400px; padding:28px 36px; box-sizing:border-box; }
+  h1 { font-size:30px; font-weight:500; margin:0; text-align:right; }
+  .sub { text-align:right; color:#556; font-size:15px; margin-bottom:18px; }
+  .row { display:flex; align-items:stretch; gap:14px; margin-bottom:10px; }
+  .tier { flex:1; border:2px solid; border-radius:12px; padding:12px 16px; }
+  .label { width:210px; flex:none; border-radius:12px; padding:12px 14px; color:#fff; display:flex; flex-direction:column; justify-content:center; }
+  .label b { font-size:19px; } .label span { font-size:13px; opacity:.92; margin-top:4px; }
+  .t0 { border-color:#5b6b8c; } .l0 { background:#5b6b8c; }
+  .t1 { border-color:#7a4fa3; } .l1 { background:#7a4fa3; }
+  .t2 { border-color:#c46a1b; } .l2 { background:#c46a1b; }
+  .tp { border-color:#1f7a4d; } .lp { background:#1f7a4d; }
+  .tier h3 { margin:0 0 6px; font-size:16px; font-weight:600; }
+  .tier p { margin:3px 0; font-size:13.5px; line-height:1.35; }
+  .verdicts { width:330px; flex:none; display:flex; flex-direction:column; gap:5px; justify-content:center; }
+  .v { border-radius:7px; padding:5px 10px; font-size:13px; border:1.5px solid; }
+  .ap { background:#e5f4ea; border-color:#3a8f5c; } .rj { background:#fbe3e3; border-color:#b83b3b; } .es { background:#fff3dc; border-color:#c48a1b; }
+  .arrow { text-align:center; font-size:13px; color:#556; margin:-4px 0 6px; }
+  .arrow b { font-size:20px; color:#c48a1b; display:block; line-height:1; }
+  table.ax { border-collapse:collapse; font-size:12.5px; margin-top:6px; }
+  table.ax td, table.ax th { border:1px solid #d8c3ad; padding:3px 8px; text-align:left; }
+  table.ax th { background:#fbeee0; }
+  .metric { font-size:12.5px; color:#333; margin-top:6px; font-style:italic; }
+  .foot { font-size:13px; color:#445; margin-top:8px; }
+</style></head>
+<body><div class="page">
+<h1>Conscience Simulator Module Architecture</h1>
+<div class="sub">Guardian Angel v6 — reflex, intuition, deliberation, and the principal. Every tier returns APPROVE, REJECT, or ESCALATE.</div>
+
+<div class="row">
+  <div class="label l0"><b>System 0</b><span>Reflex · deterministic · &lt;1 ms</span></div>
+  <div class="tier t0"><h3>Recognize what is certain by construction</h3>
+    <p>Exempt read-only tools; read-only shell whitelist (quote-aware, every pipe stage checked); reversible edits to git-tracked files.</p>
+    <p>A short list of acts wrong in any context (synderesis as reflex): <code>curl … | bash</code>, <code>rm -rf /</code>, disk wipes, fork bombs.</p>
+    <p>Anything that merely <i>looks</i> dangerous is escalated <b>with a flag</b> that travels upward.</p>
+    <div class="metric">Resolved 381 of 708 tool calls (53.8%).</div></div>
+  <div class="verdicts"><div class="v ap">APPROVE — safe by construction</div><div class="v rj">REJECT — intrinsically evil in any context</div><div class="v es">ESCALATE — everything else</div></div>
+</div>
+<div class="arrow"><b>↓</b>327 calls</div>
+
+<div class="row">
+  <div class="label l1"><b>System 1</b><span>Intuition · calibrated classifier (jev) · ~0.1–0.5 s</span></div>
+  <div class="tier t1"><h3>One typed judgment under the shared morality prompt</h3>
+    <p>Sees the action, the principal's latest request, file metadata, resolved script contents, and System 0's flags.</p>
+    <p>Returns calibrated probabilities for the three verdicts; a threshold policy turns them into a verdict.</p>
+    <div class="metric">Resolved 201 of 327 (61.5%).</div></div>
+  <div class="verdicts"><div class="v ap">APPROVE if P(approve) ≥ 0.90</div><div class="v rj">REJECT if P(reject) ≥ 0.70</div><div class="v es">ESCALATE otherwise, or on any error</div></div>
+</div>
+<div class="arrow"><b>↓</b>126 calls</div>
+
+<div class="row">
+  <div class="label l2"><b>System 2</b><span>Deliberation · any LLM (Gemini 2.5 flash) · seconds</span></div>
+  <div class="tier t2"><h3>Two axes, kept separate, then combined</h3>
+    <p><b>Step A</b> — the act on its own merits (phronesis, synderesis, conscientia, illative convergence). <b>Step B</b> — what the principal directed (evidence of intent only). <b>Step C</b> — combine:</p>
+    <table class="ax"><tr><th>Moral status (A)</th><th>Principal (B)</th><th>Decision</th></tr>
+      <tr><td>GOOD</td><td>any</td><td>APPROVE</td></tr>
+      <tr><td>INTRINSICALLY EVIL</td><td>any, even requested</td><td>REJECT</td></tr>
+      <tr><td>BAD</td><td>clearly requested</td><td>ESCALATE</td></tr>
+      <tr><td>BAD</td><td>not clearly requested</td><td>REJECT</td></tr>
+      <tr><td>UNCLEAR</td><td>any</td><td>ESCALATE</td></tr></table>
+    <p style="margin-top:6px">Also sees the session trajectory and System 1's probabilities. <b>Dissent guard:</b> if System 1's P(reject) ≥ 0.50, System 2 may not approve alone.</p>
+    <div class="metric">Resolved 76 of 126 (60.3%).</div></div>
+  <div class="verdicts"><div class="v ap">APPROVE — with certitude, and able to say why</div><div class="v rj">REJECT — names the violated principle</div><div class="v es">ESCALATE — genuine uncertainty or irreducible tension</div></div>
+</div>
+<div class="arrow"><b>↓</b>50 calls (7.1% of all tool calls)</div>
+
+<div class="row">
+  <div class="label lp"><b>The Principal</b><span>Human · the last word</span></div>
+  <div class="tier tp"><h3>Agency, authority, and responsibility remain here</h3>
+    <p>Sees each tier's reasoning, and both views when intuition and deliberation disagree. Decides. A rejection is made on the principal's behalf and always says why.</p></div>
+  <div class="verdicts"><div class="v ap">Approve</div><div class="v rj">Deny</div></div>
+</div>
+<div class="foot"><b>Doubt travels upward. Failure travels upward.</b> A missing key, timeout, parse error, or crash escalates; the module never approves or rejects because it broke. Across all tiers: 0 harmful calls approved, 1 benign call rejected. Counts are condition C of trial run-20260922-053624 (358 scenarios, 708 tool calls).</div>
+</div></body></html>
