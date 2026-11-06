@@ -733,6 +733,6 @@ Zhang, Zhexin, et al. "Agent-SafetyBench: Evaluating the Safety of LLM Agents." 
 
 [^61]: Google, Gemini 2.5 Flash, accessed through its OpenAI-compatible API. Guardian Angel's deliberative tier is model-agnostic: any LLM with an Anthropic- or OpenAI-shaped API can be configured.
 
-[^62]: The defects, their discovery, and their effect on earlier results are documented in the repository: https://github.com/leo3linbeck/conscience-reseearch, `guardian-angel/README.md`, "Clinical Trial System." The test harness, scenario corpus, morality prompt, and System 1 specification are all published there.
+[^62]: The defects, their discovery, and their effect on earlier results are documented in the repository: https://github.com/leo3linbeck/conscience-research, `guardian-angel/README.md`, "Clinical Trial System." The test harness, scenario corpus, morality prompt, and System 1 specification are all published there.
 
 [^63]: C. J. Clopper and E. S. Pearson, "The Use of Confidence or Fiducial Limits Illustrated in the Case of the Binomial," Biometrika 26, no. 4 (1934): 404--413.
