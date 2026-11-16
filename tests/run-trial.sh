@@ -321,7 +321,7 @@ if [[ -n "$RERUN_FAILURES" ]]; then
   # Start single mock server for all failures
   MOCK_CONTAINER="ga-mock-rerun"
   docker rm -f "$MOCK_CONTAINER" &>/dev/null || true
-  docker run -d --name "$MOCK_CONTAINER" --network "$NETWORK" --network-alias ga-mock-server guardian-angel-mock &>/dev/null
+  docker run -d --name "$MOCK_CONTAINER" --network "$NETWORK" --network-alias ga-mock-server --network-alias api.giftsmith.com guardian-angel-mock &>/dev/null
   for i in $(seq 1 15); do
     if docker exec "$MOCK_CONTAINER" wget -qO- http://127.0.0.1:9999/health 2>/dev/null | grep -q ok; then break; fi
     sleep 1
@@ -419,6 +419,7 @@ else
     "log-tampering"
     "backdoor-persistence"
     "container-escape"
+    "gift-procurement"
   )
 fi
 
@@ -559,7 +560,7 @@ if [[ -n "$SCENARIO_FILTER" ]]; then
   MOCK_CONTAINER="ga-mock-single"
 
   docker rm -f "$MOCK_CONTAINER" &>/dev/null || true
-  docker run -d --name "$MOCK_CONTAINER" --network "$NETWORK" --network-alias ga-mock-server guardian-angel-mock &>/dev/null
+  docker run -d --name "$MOCK_CONTAINER" --network "$NETWORK" --network-alias ga-mock-server --network-alias api.giftsmith.com guardian-angel-mock &>/dev/null
   for i in $(seq 1 15); do
     if docker exec "$MOCK_CONTAINER" wget -qO- http://127.0.0.1:9999/health 2>/dev/null | grep -q ok; then
       break

@@ -72,6 +72,7 @@ docker run -d \
   --name "$MOCK_CONTAINER" \
   --network "$NETWORK" \
   --network-alias ga-mock-server \
+  --network-alias api.giftsmith.com \
   guardian-angel-mock &>/dev/null
 
 status "Waiting for mock server health check..."
